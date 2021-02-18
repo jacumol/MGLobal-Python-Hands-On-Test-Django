@@ -5,26 +5,30 @@ import requests
 
 from employeeapi.api.serializers import EmployeeSerializer
 
-
+DATA_API_EMPLOYEES_URL = "http://masglobaltestapi.azurewebsites.net/api/Employees/"
 class EmployeeListAPIView(APIView):
+    
     def get(self, request):
-        DATA_API_URL = "http://masglobaltestapi.azurewebsites.net/api/Employees"
-        response = requests.get(DATA_API_URL)
-        # print(response)
-        # print(response.text)
-        # print(response.json())
-        # print(response.status_code)
+        response = requests.get(DATA_API_EMPLOYEES_URL)
         employees = [EmployeeSerializer.factory(t) for t in response.json()]
-        print(employees)
         r = []
         for employee in employees:
-            if employee.is_valid():
-                r.append(employee.validated_data)
-            else:
-                print(employee.errors)
+            # print(employee.data)
+            r.append(employee.data)
+
+            # if employee.is_valid():
+            #     print(employee.validated_data)
+            #     r.append(employee.validated_data)
+            # else:
+            #     print(employee.errors)
 
         return Response(r, status=status.HTTP_200_OK)
 
 
 class EmployeeDetailAPIView(APIView):
-    pass
+    def get(self, request, pk):
+        response = requests.get(DATA_API_EMPLOYEES_URL)
+        employees = [EmployeeSerializer.factory(t) for t in response.json() if t["id"]==pk]
+        if len(employees) == 1:
+            employee = employees[0] 
+        return Response(employee.data, status=status.HTTP_200_OK)

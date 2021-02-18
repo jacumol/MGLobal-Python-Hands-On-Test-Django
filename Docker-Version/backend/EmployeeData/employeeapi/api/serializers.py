@@ -1,5 +1,5 @@
 import abc
-
+from collections import namedtuple
 from rest_framework import serializers
 
 
@@ -41,10 +41,14 @@ class EmployeeSerializer(object):
 
     @classmethod
     def factory(cls, data):
+        del data["id"]
+        employee = namedtuple("Employee", data.keys())(*data.values())
         if data["contractTypeName"] == "HourlySalaryEmployee": 
-            return HourlyContractEmployeeSerializer(data=data)
+            return HourlyContractEmployeeSerializer(employee)
+            # return HourlyContractEmployeeSerializer(data=data)
         elif data["contractTypeName"] == "MonthlySalaryEmployee":
-            return MontlyContractEmployeeSerializer(data=data)
+            return MontlyContractEmployeeSerializer(employee)
+            # return MontlyContractEmployeeSerializer(data=data)
         # if "HourlySalaryEmployee" in data: 
         #     return HourlyContractEmployeeSerializer(data)
         # elif "MonthlySalaryEmployee" in data:
