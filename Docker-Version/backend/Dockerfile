@@ -14,9 +14,7 @@ ENV PYTHONUNBUFFERED 1
 
 ENV USER=desarrollo
 ENV HOME_DIR=/home/desarrollo
-ENV PROJECT_DIR=/home/desarrollo
-ENV PROJECT_DIR=/home/desarrollo
-# ENV PROJECT_DIR=/home/desarrollo/QuestionTime
+ENV PROJECT_DIR=/home/desarrollo/EmployeeData
 
 # Create home user
 # Create the user desarrollo.
@@ -37,7 +35,7 @@ RUN apt-get update \
     && pip install --upgrade pip \
     && pip install -r $HOME_DIR/requirements.txt
 
-# COPY ./QuestionTime $PROJECT_DIR
+COPY ./EmployeeData $PROJECT_DIR
 RUN chown -R $USER:$USER $HOME_DIR
 
 USER $USER
