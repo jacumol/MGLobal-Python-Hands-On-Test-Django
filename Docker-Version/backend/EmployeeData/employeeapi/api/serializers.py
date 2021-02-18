@@ -18,39 +18,30 @@ class BaseEmployeeSerializer(serializers.Serializer):
     anualSalary = serializers.SerializerMethodField()
 
     @abc.abstractmethod
-    def get_anualSalary(self, instance):
+    def get_anualSalary(self, instance) -> int:
         """
-            This method computes the anualsalary of the employee.
+        This method computes the anualsalary of the employee.
         """
         pass
 
 
 class HourlyContractEmployeeSerializer(BaseEmployeeSerializer):
-    
-    def get_anualSalary(self, instance):
+    def get_anualSalary(self, instance) -> int:
         return 120 * instance.hourlySalary * 12
 
 
 class MontlyContractEmployeeSerializer(BaseEmployeeSerializer):
-    
-    def get_anualSalary(self, instance):
+    def get_anualSalary(self, instance) -> int:
         return instance.monthlySalary * 12
 
 
 class EmployeeSerializer(object):
-
     @classmethod
     def factory(cls, data):
-        del data["id"]
         employee = namedtuple("Employee", data.keys())(*data.values())
-        if data["contractTypeName"] == "HourlySalaryEmployee": 
+
+        if data.get("contractTypeName") == "HourlySalaryEmployee":
             return HourlyContractEmployeeSerializer(employee)
-            # return HourlyContractEmployeeSerializer(data=data)
-        elif data["contractTypeName"] == "MonthlySalaryEmployee":
+        elif data.get("contractTypeName") == "MonthlySalaryEmployee":
             return MontlyContractEmployeeSerializer(employee)
-            # return MontlyContractEmployeeSerializer(data=data)
-        # if "HourlySalaryEmployee" in data: 
-        #     return HourlyContractEmployeeSerializer(data)
-        # elif "MonthlySalaryEmployee" in data:
-        #     return MontlyContractEmployeeSerializer(data)
-        assert 0, "Bad Employee creation: " + type
+        assert 0, "Bad Employee creation: " + data.get("contractTypeName")
