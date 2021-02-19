@@ -11,8 +11,7 @@ class EmployeeListAPIView(APIView):
         response = EmployeeDataGetter.get_api_data()
         if type(response) is dict:
             return Response(response, status=status.HTTP_503_SERVICE_UNAVAILABLE)
-
-        employees = [EmployeeSerializer.factory(t) for t in response.json()]
+        employees = [EmployeeSerializer.factory(t) for t in response]
         data = []
         for employee in employees:
             try:
@@ -33,9 +32,8 @@ class EmployeeDetailAPIView(APIView):
         response = EmployeeDataGetter.get_api_data()
         if type(response) is dict:
             return Response(response, status=status.HTTP_503_SERVICE_UNAVAILABLE)
-
         employees = [
-            EmployeeSerializer.factory(t) for t in response.json() if t.get("id") == pk
+            EmployeeSerializer.factory(t) for t in response if t.get("id") == pk
         ]
 
         if len(employees) == 1:

@@ -19,9 +19,7 @@ class BaseEmployeeSerializer(serializers.Serializer):
 
     @abc.abstractmethod
     def get_anualSalary(self, instance) -> int:
-        """
-        This method computes the anualsalary of the employee.
-        """
+        """This method computes the anualsalary of the employee."""
         pass
 
 
@@ -38,6 +36,7 @@ class MontlyContractEmployeeSerializer(BaseEmployeeSerializer):
 class EmployeeSerializer(object):
     @classmethod
     def factory(cls, data):
+        """This method implements the Simple Factory Pattern to create the respective object"""
         employee = namedtuple("Employee", data.keys())(*data.values())
 
         if data.get("contractTypeName") == "HourlySalaryEmployee":

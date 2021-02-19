@@ -20,5 +20,5 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", include("employeeapi.api.urls")),
     # re_path(r"^.*$", include('employeeapi.urls')),
-    path("", include('employeeapi.urls')),
+    path("", include("employeeapi.urls")),
 ]

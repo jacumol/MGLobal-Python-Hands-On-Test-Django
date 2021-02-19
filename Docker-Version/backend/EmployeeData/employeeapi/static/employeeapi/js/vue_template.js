@@ -16,6 +16,7 @@ var vm = new Vue({
          { text: 'Monthly Salary', value: 'monthlySalary' },
          { text: 'Anual Salary', value: 'anualSalary' },
        ],
+       snackbar: false,
    },
    methods: {
       getData: function () {
@@ -34,10 +35,7 @@ var vm = new Vue({
                }
             })
             .catch(function (err) {
-               console.log(err);
-            })
-            .then(function () {
-               // loading.style.display = 'none';
+               me.snackbar = true;
             });
       }
    }

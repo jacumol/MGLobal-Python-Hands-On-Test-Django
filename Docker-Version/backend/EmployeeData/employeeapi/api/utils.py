@@ -6,6 +6,10 @@ DATA_API_EMPLOYEES_URL = "http://masglobaltestapi.azurewebsites.net/api/Employee
 
 
 class EmployeeDataGetter(object):
+    """This class is a helper to get the data from the source
+    separating the communication logic from the other processes.
+    """
+
     @classmethod
     def get_api_data(cls) -> List[Dict]:
         try:
@@ -22,4 +26,4 @@ class EmployeeDataGetter(object):
         except:
             return {"message": "Unknown error"}
 
-        return response
+        return response.json()
