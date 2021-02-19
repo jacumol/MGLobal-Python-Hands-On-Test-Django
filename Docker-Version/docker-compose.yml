@@ -14,4 +14,4 @@ services:
     shm_size: "256mb" # Increase Shared Memory that is by default 64
     sysctls:
       - net.core.somaxconn=1024 # Increase the quantity og conections by default in 128
-    command: /bin/sh -c "sleep 100000; python manage.py runserver 0.0.0.0:8000"
+    command: /bin/sh -c "python manage.py runserver 0.0.0.0:8000"
