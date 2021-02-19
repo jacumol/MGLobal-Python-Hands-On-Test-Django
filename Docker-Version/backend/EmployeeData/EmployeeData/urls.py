@@ -19,6 +19,6 @@ from django.urls import include, path, re_path
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", include("employeeapi.api.urls")),
-    re_path(r"^.*$", include('employeeapi.urls')),
-    # re_path(r"^.*$", IndexTemplateView.as_view(), name="entry-point"),
+    # re_path(r"^.*$", include('employeeapi.urls')),
+    path("", include('employeeapi.urls')),
 ]
